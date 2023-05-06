@@ -1,0 +1,69 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import plotly.express as px
+df=pd.read_csv('Music_and_Mental_Health_-_Survey.csv')
+import matplotlib.pyplot as plt
+
+df.head()
+
+df.shape
+
+df.describe()
+
+df.columns
+
+df.isnull().sum()
+
+df.info()
+
+hours_per_day_mean = df['Hours per day'].mean()
+print("Mean hours per day:", hours_per_day_mean)
+
+plt.figure(figsize=(6,4))
+sns.barplot(data = df,x = 'Hours per day',y = 'Age')
+plt.show()
+plt.close()
+
+genre_colum = [col for col in df.columns if 'Frequency' in col]
+corr = df[genre_colum + ['Anxiety', 'Depression', 'Insomnia', 'OCD']].corr()
+corr
+
+# relationships between music genre preferences and mental health symptoms.
+
+df = df.dropna()
+
+df.duplicated().sum()
+
+missing_values_count = df["BPM"].isna().sum()
+
+missing_values_count
+
+
+
+mean = df["BPM"].mean()
+std_dev = df["BPM"].std()
+# identify outliers
+outliers = df[(df["BPM"] < mean - 2*std_dev) | (df["BPM"] > mean + 2*std_dev)]
+outliers.head()
+     
+# create boxplot
+sns.boxplot(x=df["BPM"])
+
+cleaned_data=pd.read_csv('Music_and_Mental_Health_-_Survey.csv')
+
+df.to_csv('Music_and_Mental_Health_-_Survey.csv',index=False)
+
+df = df[~df.index.isin(outliers.index)]
+
+# create boxplots
+sns.boxplot(x=df["BPM"])
+
+cleaned_data.head()
+
+cleaned_data.info()
+
+df.isnull().sum()
+
+
+
